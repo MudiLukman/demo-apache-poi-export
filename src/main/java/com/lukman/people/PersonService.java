@@ -22,7 +22,7 @@ public class PersonService {
 
     public byte[] exportToExcel() {
         workbook = new PeopleWorkbook(dummyColumnNames());
-        people = dummyCustomers();
+        people = dummyCustomers(1000);
         people.forEach(workbook::addTableData);
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
             workbook.writeTo(outputStream);
@@ -33,10 +33,10 @@ public class PersonService {
         }
     }
 
-    private List<Person> dummyCustomers() {
+    private List<Person> dummyCustomers(int size) {
         List<Person> people = new ArrayList<>();
         Faker faker = new Faker();
-        for (int i = 1; i <= 1000; i++) {
+        for (int i = 1; i <= size; i++) {
             people.add(new Person(
                     faker.idNumber().ssnValid(),
                     faker.name().firstName(),
