@@ -6,6 +6,7 @@ import com.lukman.people.model.Person;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.WebApplicationException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -29,7 +30,7 @@ public class PersonService {
             return outputStream.toByteArray();
         } catch (IOException ex) {
             log.error("An IO error occurred: {}", ex.getMessage());
-            throw new WebApplicationException("Unable to generate report");
+            throw new InternalServerErrorException("Unable to generate report");
         }
     }
 
