@@ -27,7 +27,6 @@ public class PeopleResourceTest {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=customer-report.xlsx")
                 .extract().body().asByteArray();
 
-        System.out.println("File size: " + (file.length / 1000) + "KB");
         Assertions.assertTrue(file.length > 0);
     }
 

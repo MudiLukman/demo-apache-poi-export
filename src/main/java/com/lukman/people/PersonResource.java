@@ -3,6 +3,8 @@ package com.lukman.people;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import javax.inject.Inject;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.ws.rs.*;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
@@ -18,11 +20,12 @@ public class PersonResource {
     @GET
     @Path("export")
     @Produces(XLSX_MIME_TYPE)
-    public Response getReport(@QueryParam("type") FileType type) {
+    public Response getReport(@QueryParam("type") FileType type,
+                              @QueryParam("size") @DefaultValue("100") @Min(1) @Max(5000) int size) {
         String contentDisposition;
         if (type == FileType.EXCEL) {
             contentDisposition = "attachment; filename=customer-report.xlsx";
-            byte[] fileContent = personService.exportToExcel();
+            byte[] fileContent = personService.exportToExcel(size);
             return Response.ok(fileContent)
                     .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
                     .build();
