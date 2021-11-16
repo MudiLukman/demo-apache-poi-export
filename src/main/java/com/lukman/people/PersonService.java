@@ -20,9 +20,9 @@ public class PersonService {
     private List<Person> people;
     private PeopleWorkbook workbook;
 
-    public byte[] exportToExcel() {
+    public byte[] exportToExcel(int size) {
         workbook = new PeopleWorkbook(dummyColumnNames());
-        people = dummyCustomers(1000);
+        people = dummyCustomers(size);
         people.forEach(workbook::addTableData);
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
             workbook.writeTo(outputStream);
